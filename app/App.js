@@ -78,7 +78,7 @@ class Index extends Component {
                 <ScrollView>
                     <Image
                         style={styles.logo}
-                        source={require('./images/mtg-logo.png')}
+                        source={require('images/mtg-logo.png')}
                     />
                     <Text style={styles.instructions}>
                         Enter card name:

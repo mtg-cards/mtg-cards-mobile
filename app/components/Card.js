@@ -17,7 +17,7 @@ export default ({ id, cardName, setName, imageUrl }) => {
             </Text>
             <Image
                 style={styles.cardIcon}
-                defaultSource={require('./../images/mtg-logo-bw.png')}
+                defaultSource={require('images/mtg-logo-bw.png')}
                 source={{uri: imageUrl}}
             />
         </View>
