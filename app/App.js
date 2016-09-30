@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import Button from 'react-native-button';
+import { MessageBar as MessageBarAlert, MessageBarManager } from 'react-native-message-bar';
 
 class Index extends Component {
     constructor(props) {
@@ -27,10 +28,37 @@ class Index extends Component {
         };
     }
 
+    componentDidMount() {
+        MessageBarManager.registerMessageBar(this.refs.alert);
+    }
+
+    componentWillUnmount() {
+        MessageBarManager.unregisterMessageBar();
+    }
+
     searchCards() {
         fetch('https://api.magicthegathering.io/v1/cards?orderBy=name&name=' + this.state.cardName)
             .then(res => res.json())
-            .then(data => this.setState({foundCards: data.cards}));
+            .then(data => {
+                this.setState({foundCards: data.cards});
+                if (data.cards.length == 0) {
+                    MessageBarManager.showAlert({
+                        message: 'No cards found with that name.',
+                        alertType: 'error',
+                    });
+                } else if (data.cards.length == 100) {
+                    MessageBarManager.showAlert({
+                        message: 'Found more than 100 cards.\nPlease refine search!',
+                        alertType: 'warning',
+                    });
+
+                } else {
+                    MessageBarManager.showAlert({
+                        message: 'Found ' + data.cards.length + ' cards.',
+                        alertType: 'success',
+                    });
+                }
+            });
     }
 
     render() {
@@ -81,6 +109,7 @@ class Index extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                <MessageBarAlert ref="alert" />
             </View>
         );
     }
