@@ -15,6 +15,7 @@ import {
     Image
 } from 'react-native';
 
+import Card from 'components/Card';
 import Button from 'react-native-button';
 import { MessageBar as MessageBarAlert, MessageBarManager } from 'react-native-message-bar';
 
@@ -64,19 +65,11 @@ class Index extends Component {
     render() {
         let foundCardsList = this.state.foundCards.map(function (item) {
             return (
-                <View key={item.id} style={styles.cardItem}>
-                    <Text style={styles.cardName}>
-                        {item.name}
-                    </Text>
-                    <Text style={styles.setName}>
-                        {item.setName}
-                    </Text>
-                    <Image
-                        style={styles.cardIcon}
-                        defaultSource={require('./images/mtg-logo-bw.png')}
-                        source={{uri: item.imageUrl}}
-                    />
-                </View>
+                <Card key={item.id}
+                      cardName={item.name}
+                      setName={item.setName}
+                      imageUrl={item.imageUrl}
+                />
             );
         });
 
